@@ -10,5 +10,6 @@ class CommentCreateAPIView(CreateAPIView):
         serializer.save(Author=self.request.user)
 
 class CommentListAPIView(ListAPIView):
-    queryset = CommentModel.objects.all()
     serializer_class = CommentListSerializers
+    def get_queryset(self):
+        return CommentModel.objects.filter(Parent=None)
