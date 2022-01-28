@@ -9,9 +9,8 @@ from .paginations import PostPagination
 #Tüm postlar
 class PostListAPIView(ListAPIView):
     serializer_class = PostSerializer
-    search_fields=[SearchFilter,OrderingFilter]
+    search_fields    =[SearchFilter,OrderingFilter]
     pagination_class = PostPagination
-    queryset = PostModel.objects.filter(Draft=False)
 
     def get_queryset(self):
         queryset = PostModel.objects.filter(Draft=False)
@@ -19,16 +18,16 @@ class PostListAPIView(ListAPIView):
 
 #Detay sayfası işlemi
 class PostDetailAPIView(RetrieveAPIView):
-    queryset = PostModel.objects.all()
+    queryset         = PostModel.objects.all()
     serializer_class = PostDetailSerializer
-    lookup_field = 'Slug'
+    lookup_field     = 'Slug'
 
 #Silme İşlemi
 class PostDeleteAPIView(DestroyAPIView):
-    queryset = PostModel.objects.all()
-    serializer_class = PostSerializer
+    queryset           = PostModel.objects.all()
+    serializer_class   = PostSerializer
     permission_classes = [IsOwner,IsAuthenticated]
-    lookup_field = 'Slug'
+    lookup_field       = 'Slug'
 
 #Güncelleme işlemi
 class PostUpdateAPIView(RetrieveUpdateAPIView):

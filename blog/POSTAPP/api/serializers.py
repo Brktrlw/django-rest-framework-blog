@@ -29,7 +29,6 @@ class PostDetailSerializer(serializers.ModelSerializer):
         model = PostModel
         fields=["Author","Title","Content",'Draft','CreatedDate','ModifiedDate','Image','url']
 
-
 class PostCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostModel
