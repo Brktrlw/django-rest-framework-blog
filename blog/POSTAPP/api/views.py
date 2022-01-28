@@ -1,6 +1,6 @@
 from rest_framework.generics import ListAPIView,RetrieveAPIView,RetrieveUpdateAPIView,DestroyAPIView,CreateAPIView
 from POSTAPP.models import PostModel
-from .serializers import PostSerializer
+from .serializers import PostSerializer,PostDetailSerializer,PostCreateUpdateSerializer
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsOwner
 from rest_framework.filters import SearchFilter,OrderingFilter
@@ -20,7 +20,7 @@ class PostListAPIView(ListAPIView):
 #Detay sayfası işlemi
 class PostDetailAPIView(RetrieveAPIView):
     queryset = PostModel.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostDetailSerializer
     lookup_field = 'Slug'
 
 #Silme İşlemi
@@ -32,15 +32,15 @@ class PostDeleteAPIView(DestroyAPIView):
 
 #Güncelleme işlemi
 class PostUpdateAPIView(RetrieveUpdateAPIView):
-    queryset = PostModel.objects.all()
-    serializer_class = PostSerializer
+    queryset           = PostModel.objects.all()
+    serializer_class   = PostCreateUpdateSerializer
     permission_classes = [IsOwner,IsAuthenticated]
-    lookup_field = 'Slug'
+    lookup_field       = 'Slug'
 
 #Create işlemi
 class PostCreateAPIView(CreateAPIView):
-    queryset = PostModel.objects.all()
-    serializer_class = PostSerializer
+    queryset           = PostModel.objects.all()
+    serializer_class   = PostCreateUpdateSerializer
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
