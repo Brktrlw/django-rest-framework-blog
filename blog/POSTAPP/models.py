@@ -23,7 +23,6 @@ class PostModel(models.Model):
         self.Slug = slugify(unidecode(self.Title))
         return super(PostModel,self).save(*args,**kwargs)
 
-
     class Meta:
         db_table="Posts"
         verbose_name_plural="Postlar"
@@ -31,3 +30,4 @@ class PostModel(models.Model):
 
     def __str__(self):
         return self.Title
+

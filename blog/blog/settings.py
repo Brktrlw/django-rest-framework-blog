@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_cleanup',
     'POSTAPP',
+    'COMMENTAPP',
 ]
 
 MIDDLEWARE = [

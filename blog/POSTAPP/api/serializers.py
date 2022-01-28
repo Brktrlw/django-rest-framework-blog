@@ -6,6 +6,7 @@ class PostSerializer(serializers.ModelSerializer):
         view_name="post:postDetail",
         lookup_field="Slug"
     )
+
     AuthorName      = serializers.CharField(source="Author.username")
     #olusturmaTarihi = serializers.SerializerMethodField(method_name="createdDateMethod")
     class Meta:
