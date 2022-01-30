@@ -6,14 +6,13 @@ from .permissions import IsOwner
 from rest_framework.filters import SearchFilter,OrderingFilter
 from .paginations import PostPagination
 
-#Tüm postlar
 class PostListAPIView(ListAPIView):
     serializer_class = PostSerializer
     search_fields    =[SearchFilter,OrderingFilter]
-    pagination_class = PostPagination
+  #  pagination_class = PostPagination
 
     def get_queryset(self):
-        queryset = PostModel.objects.filter(Draft=False)
+        queryset = PostModel.objects.filter(Draft=False )
         return queryset
 
 #Detay sayfası işlemi
@@ -36,11 +35,15 @@ class PostUpdateAPIView(RetrieveUpdateAPIView):
     permission_classes = [IsOwner,IsAuthenticated]
     lookup_field       = 'Slug'
 
+    def perform_update(self, serializer):
+        serializer.save(Author=self.request.user)
+        
 #Create işlemi
 class PostCreateAPIView(CreateAPIView):
     queryset           = PostModel.objects.all()
     serializer_class   = PostCreateUpdateSerializer
     permission_classes = [IsAuthenticated]
+
 
     def perform_create(self, serializer):
         serializer.save(Author=self.request.user)
