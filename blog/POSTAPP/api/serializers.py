@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from POSTAPP.models import PostModel
 from datetime import datetime
-from COMMENTAPP.api.serializers import CommentListSerializers
+
+
 
 class PostSerializer(serializers.ModelSerializer):
     url          = serializers.HyperlinkedIdentityField(view_name="post:postDetail", lookup_field="Slug")
@@ -24,26 +25,17 @@ class PostSerializer(serializers.ModelSerializer):
         model=PostModel
         fields=["Author","Title","Content",'Draft','CreatedDate','ModifiedDate','Image','url']
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class PostDetailSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name="post:postDetail", lookup_field="Slug")
+    url      = serializers.HyperlinkedIdentityField(view_name="post:postDetail", lookup_field="Slug")
+    Author   = serializers.SerializerMethodField()
+
+
+    def get_Author(self,obj):
+        return obj.Author.username
+
     class Meta:
         model = PostModel
-        fields=["Author","Title","Content",'Draft','CreatedDate','ModifiedDate','Image','url',"Comments"]
+        fields=["Author","Title","Content",'Draft','CreatedDate','ModifiedDate','Image','url']
 
 class PostCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:

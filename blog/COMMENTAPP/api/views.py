@@ -27,5 +27,6 @@ class CommentUpdateAPIView(RetrieveUpdateAPIView):
     lookup_field = "pk"
     serializer_class = CommentUpdateSerializer
     permission_classes = [IsAuthenticated,IsOwner]
+
     def perform_update(self, serializer):
         serializer.save(Author=self.request.user)
