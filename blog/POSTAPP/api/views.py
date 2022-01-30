@@ -37,7 +37,7 @@ class PostUpdateAPIView(RetrieveUpdateAPIView):
 
     def perform_update(self, serializer):
         serializer.save(Author=self.request.user)
-        
+
 #Create işlemi
 class PostCreateAPIView(CreateAPIView):
     queryset           = PostModel.objects.all()
