@@ -34,4 +34,7 @@ class CommentListSerializers(ModelSerializer):
         model=CommentModel
         fields=("Author","CreatedDate","Post","Parent","CommentText","Replies")
 
-
+class CommentUpdateSerializer(ModelSerializer):
+    class Meta:
+        model=CommentModel
+        fields=('CommentText',)
