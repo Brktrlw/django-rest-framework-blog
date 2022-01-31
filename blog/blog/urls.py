@@ -12,6 +12,7 @@ urlpatterns = [
     path("api/post/",include("POSTAPP.api.urls",namespace="post")),
     path("api/comment/",include("COMMENTAPP.api.urls",namespace="comment")),
     path("api/favorites/",include("FAVORITES.api.urls",namespace="favorites")),
+    #path("api/"),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
