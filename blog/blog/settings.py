@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,6 +10,16 @@ SECRET_KEY = 'django-insecure-&9-3+%*u!p&r5&jnpp*71y866f+acr(8)24tg691h)k!1qh2yd
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
+    )
+}
+SIMPLE_JWT={
+   'ACCESS_TOKEN_LIFETIME':timedelta(minutes=15)
+}
 
 
 INSTALLED_APPS = [
@@ -22,6 +33,7 @@ INSTALLED_APPS = [
     'django_cleanup',
     'POSTAPP',
     'COMMENTAPP',
+    'FAVORITES'
 ]
 
 MIDDLEWARE = [
