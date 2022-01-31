@@ -1,7 +1,9 @@
+from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer
 from COMMENTAPP.models import CommentModel
 from rest_framework import serializers
 from datetime import datetime
+
 class CommentCreateSerializer(ModelSerializer):
     class Meta:
         model=CommentModel
@@ -13,10 +15,14 @@ class CommentCreateSerializer(ModelSerializer):
                 raise serializers.ValidationError("Bir şeyler Ters Gitti")
         return attrs
 
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields=('first_name','last_name','username',"id") #
 
 class CommentListSerializers(ModelSerializer):
     CreatedDate  = serializers.SerializerMethodField()
-    Author       = serializers.SerializerMethodField()
+    Author       = UserSerializer()
     Replies      = serializers.SerializerMethodField()
     ModifiedDate = serializers.SerializerMethodField()
 

@@ -3,6 +3,7 @@ from COMMENTAPP.models import CommentModel
 from .serializers import CommentCreateSerializer,CommentListSerializers,CommentUpdateSerializer
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsOwner
+from .paginations import CommentPagination
 
 class CommentCreateAPIView(CreateAPIView):
     queryset = CommentModel.objects.all()
@@ -12,10 +13,16 @@ class CommentCreateAPIView(CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(Author=self.request.user)
 
+
 class CommentListAPIView(ListAPIView):
     serializer_class = CommentListSerializers
+    pagination_class = CommentPagination
     def get_queryset(self):
-        return CommentModel.objects.filter(Parent=None)
+        queryset=CommentModel.objects.filter(Parent=None)
+        query = self.request.GET.get("q")
+        if query:
+            queryset=queryset.filter(Post=query)
+        return queryset
 
 class CommentDeleteAPIView(DestroyAPIView):
     queryset = CommentModel.objects.all()
