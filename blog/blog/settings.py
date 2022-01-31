@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'django_cleanup',
     'POSTAPP',
     'COMMENTAPP',
-    'FAVORITES'
+    'FAVORITES',
+    'USERAPP'
 ]
 
 MIDDLEWARE = [
