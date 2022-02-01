@@ -2,8 +2,6 @@ from rest_framework import serializers
 from POSTAPP.models import PostModel
 from datetime import datetime
 
-
-
 class PostSerializer(serializers.ModelSerializer):
     url          = serializers.HyperlinkedIdentityField(view_name="post:postDetail", lookup_field="Slug")
     CreatedDate  = serializers.SerializerMethodField(method_name="get_CreatedDate")

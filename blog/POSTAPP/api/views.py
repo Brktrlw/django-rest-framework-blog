@@ -8,8 +8,8 @@ from .paginations import PostPagination
 
 class PostListAPIView(ListAPIView):
     serializer_class = PostSerializer
-    search_fields    =[SearchFilter,OrderingFilter]
-  #  pagination_class = PostPagination
+    search_fields    = [SearchFilter,OrderingFilter]
+    pagination_class = PostPagination
 
     def get_queryset(self):
         queryset = PostModel.objects.filter(Draft=False )
@@ -28,6 +28,8 @@ class PostDeleteAPIView(DestroyAPIView):
     permission_classes = [IsOwner,IsAuthenticated]
     lookup_field       = 'Slug'
 
+    def perform_destroy(self, instance):
+        instance.delete()
 #Güncelleme işlemi
 class PostUpdateAPIView(RetrieveUpdateAPIView):
     queryset           = PostModel.objects.all()
