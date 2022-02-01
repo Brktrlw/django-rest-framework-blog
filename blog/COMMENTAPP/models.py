@@ -9,6 +9,7 @@ class CommentModel(models.Model):
     CommentText  = models.CharField(max_length=150,verbose_name="Yorum İçeriği")
     Post         = models.ForeignKey(PostModel,on_delete=models.CASCADE,verbose_name="Post",related_name="comments")
     Parent       = models.ForeignKey("self",on_delete=models.CASCADE,null=True,blank=True,related_name="replies")
+
     class Meta:
         db_table="Comments"
         verbose_name = "Yorum"
