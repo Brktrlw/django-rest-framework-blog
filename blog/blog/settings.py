@@ -18,6 +18,10 @@ REST_FRAMEWORK = {
     )
 }
 
+SIMPLE_JWT={
+    "ACCESS_TOKEN_LIFETIME":timedelta(minutes=15)
+}
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

@@ -4,13 +4,16 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class ProfileModel(models.Model):
-    user    = models.ForeignKey(User,on_delete=models.CASCADE)
+    user    = models.OneToOneField(User,on_delete=models.CASCADE,related_name="profile")
     twitter = models.CharField(max_length=100)
 
     class Meta:
         db_table="Profile"
         verbose_name="Profil"
         verbose_name_plural="Profil"
+
+    def __str__(self):
+        return self.user.username
 
 @receiver(post_save,sender=User)
 def whenCreateUser(sender,**kwargs):
