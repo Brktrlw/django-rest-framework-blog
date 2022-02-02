@@ -9,8 +9,8 @@ from django.urls import reverse
 # TOKEN İLE GİRİŞ YAPTIYSAK HATA ALMALIYIZ
 
 class UserRegistrationTestCase(APITestCase):
-    url = reverse("account:createUser")
-
+    url       = reverse("account:createUser")
+    url_login = reverse("token_obtain_pair")
     def test_user_registration(self):
         """
             DOĞRU VERİLER İLE KAYIT İŞLEMİ
@@ -53,4 +53,20 @@ class UserRegistrationTestCase(APITestCase):
         response=self.client.get(self.url)
         self.assertEqual(403,response.status_code)
 
+    def test_user_authenticated_token_resgistration(self):
+        """
+            token ile giriş yapmıs kullanıcı sayfayı görememeli
+        """
+        self.test_user_registration()
+        data = {
+            "username": "testkullanicisi",
+            "password": "123Bs123"
+        }
+        response = self.client.post(self.url_login,data=data)
+        self.assertEqual(200,response.status_code)
 
+        token = response.data["access"]
+        self.client.credentials(HTTP_AUTHORIZATION="Bearer "+token)
+
+        response_2 = self.client.get(self.url)
+        self.assertEqual(403,response_2.status_code)

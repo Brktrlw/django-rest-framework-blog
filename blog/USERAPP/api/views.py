@@ -45,6 +45,6 @@ class UpdatePasswordAPIView(APIView):
 
 class CreateUserAPIView(CreateAPIView):
     model = User.objects.all()
-    throttle_classes = [RegisterThrottle]
+    #throttle_classes = [RegisterThrottle]
     permission_classes = [isauthenticated]
     serializer_class = RegisterSerializer
