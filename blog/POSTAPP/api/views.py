@@ -3,16 +3,14 @@ from POSTAPP.models import PostModel
 from .serializers import PostSerializer,PostDetailSerializer,PostCreateUpdateSerializer
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsOwner
-from rest_framework.filters import SearchFilter,OrderingFilter
 from .paginations import PostPagination
 
 class PostListAPIView(ListAPIView):
     serializer_class = PostSerializer
-    search_fields    = [SearchFilter,OrderingFilter]
     pagination_class = PostPagination
 
     def get_queryset(self):
-        queryset = PostModel.objects.filter(Draft=False )
+        queryset = PostModel.objects.filter(Draft=False)
         return queryset
 
 #Detay sayfası işlemi

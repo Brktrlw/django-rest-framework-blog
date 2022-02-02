@@ -29,6 +29,8 @@ class PostDetailSerializer(serializers.ModelSerializer):
     url      = serializers.HyperlinkedIdentityField(view_name="post:postDetail", lookup_field="Slug")
     Author   = serializers.SerializerMethodField()
     Yorumlar = serializers.SerializerMethodField(method_name="get_Yorumlar")
+    CreatedDate = serializers.SerializerMethodField(method_name="get_CreatedDate")
+    ModifiedDate = serializers.SerializerMethodField(method_name="get_ModifiedDate")
 
     def get_Yorumlar(self,obj):
         yorumlar   = obj.comments.all()
@@ -37,6 +39,13 @@ class PostDetailSerializer(serializers.ModelSerializer):
             return None
         return serializer.data
 
+    def get_CreatedDate(self, obj):
+        tarih = datetime.strftime(obj.CreatedDate, '%d/%m/%Y %H:%M:%S')
+        return str(tarih)
+
+    def get_ModifiedDate(self, obj):
+        tarih = datetime.strftime(obj.ModifiedDate, '%d/%m/%Y %H:%M:%S')
+        return str(tarih)
 
     def get_Author(self,obj):
         return obj.Author.username
@@ -44,6 +53,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostModel
         fields=["Author","Title","Content",'Draft','CreatedDate','ModifiedDate','Image','url','Yorumlar']
+
 
 class PostCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
