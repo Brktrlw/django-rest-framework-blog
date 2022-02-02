@@ -4,6 +4,8 @@ from rest_framework.generics import RetrieveUpdateAPIView,get_object_or_404,Crea
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from rest_framework.response import Response
+
+from .permissions import isauthenticated
 from .throttles import RegisterThrottle
 from .serializers import UserSerializer, ChangePasswordSerializer, RegisterSerializer
 from rest_framework.views import APIView
@@ -44,4 +46,5 @@ class UpdatePasswordAPIView(APIView):
 class CreateUserAPIView(CreateAPIView):
     model = User.objects.all()
     throttle_classes = [RegisterThrottle]
+    permission_classes = [isauthenticated]
     serializer_class = RegisterSerializer
