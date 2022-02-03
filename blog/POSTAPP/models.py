@@ -27,7 +27,7 @@ class PostModel(models.Model):
         db_table="Posts"
         verbose_name_plural="Postlar"
         verbose_name="Post"
-
+        ordering=("CreatedDate",)
     def __str__(self):
         return self.Title
 

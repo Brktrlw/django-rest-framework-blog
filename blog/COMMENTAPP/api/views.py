@@ -1,10 +1,13 @@
 from rest_framework.generics import CreateAPIView,ListAPIView,RetrieveUpdateAPIView
+
+from POSTAPP.models import PostModel
 from COMMENTAPP.models import CommentModel
 from .serializers import CommentCreateSerializer,CommentListSerializers,CommentUpdateSerializer
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsOwner
 from .paginations import CommentPagination
 from rest_framework.mixins import DestroyModelMixin
+
 
 class CommentCreateAPIView(CreateAPIView):
     queryset = CommentModel.objects.all()

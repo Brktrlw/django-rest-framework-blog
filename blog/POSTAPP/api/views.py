@@ -7,7 +7,7 @@ from .paginations import PostPagination
 
 class PostListAPIView(ListAPIView):
     serializer_class = PostSerializer
-    #pagination_class = PostPagination
+    pagination_class = PostPagination
 
     def get_queryset(self):
         queryset = PostModel.objects.filter(Draft=False)
