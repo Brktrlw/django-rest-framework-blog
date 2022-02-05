@@ -17,12 +17,6 @@ class LikeCreateSerializer(serializers.ModelSerializer):
         model = LikesDislikesModel
         fields = ("Post","user")
 
-    def validate(self, attrs):
-        _isLike = LikesDislikesModel.objects.filter(user=attrs["user"],isLike=1,Post=attrs["Post"]).exists()
-        if _isLike:
-            raise serializers.ValidationError("Bu kullanıcı zaten bu gönderiyi beğenmiş")
-        return attrs
-
 class LikesDeleteSerializer(serializers.ModelSerializer):
     class Meta:
         model  = LikesDislikesModel

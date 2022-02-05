@@ -19,7 +19,13 @@ class LikeCreateAPIView(CreateAPIView):
     serializer_class = LikeCreateSerializer
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user,isLike=1)
+        # Eğer kullanıcı beğendiyse beğeniyi geri alıyoruz,beğenmediyse bgönderiyi beğeniyoruz.
+        _isLike = LikesDislikesModel.objects.filter(user=self.request.user,Post=self.request.data.get("Post"),isLike=1).exists()
+        if _isLike==False:
+            serializer.save(user=self.request.user,isLike=1)
+        else:
+            likeObject = LikesDislikesModel.objects.get(user=self.request.user,Post=self.request.data.get("Post"),isLike=1)
+            likeObject.delete()
 
 class LikeDeleteAPIView(DestroyAPIView):
     serializer_class = LikesDeleteSerializer
