@@ -25,7 +25,10 @@ class CommentListSerializers(ModelSerializer):
     Author       = UserSerializer()
     Replies      = serializers.SerializerMethodField()
     ModifiedDate = serializers.SerializerMethodField()
+    TotalLikes   = serializers.SerializerMethodField()
 
+    def get_TotalLikes(self,obj):
+        return obj.likes.all().count()
     def get_Replies(self,obj):
         if obj.any_children:
             return CommentListSerializers(obj.children(),many=True).data
@@ -43,7 +46,7 @@ class CommentListSerializers(ModelSerializer):
 
     class Meta:
         model=CommentModel
-        fields=("Author","CreatedDate","ModifiedDate","Post","Parent","CommentText","Replies")
+        fields=("Author","CreatedDate","ModifiedDate","TotalLikes","Post","Parent","CommentText","Replies")
 
 class CommentUpdateSerializer(ModelSerializer):
     class Meta:
