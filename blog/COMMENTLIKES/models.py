@@ -11,3 +11,5 @@ class CommentLikesModel(models.Model):
         db_table="CommentLikes"
         verbose_name="Yorum Beğeni"
         verbose_name_plural="Yorum Beğenileri"
+    def __str__(self):
+        return self.user.username + " " + str(self.Comment.id)
