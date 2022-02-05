@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'POSTAPP',
     'COMMENTAPP',
     'FAVORITES',
-    'USERAPP'
+    'USERAPP',
+    'LIKESAPP'
 ]
 
 MIDDLEWARE = [

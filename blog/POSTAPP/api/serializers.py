@@ -8,7 +8,11 @@ class PostSerializer(serializers.ModelSerializer):
     CreatedDate  = serializers.SerializerMethodField(method_name="get_CreatedDate")
     ModifiedDate = serializers.SerializerMethodField(method_name="get_ModifiedDate")
     Author       = serializers.SerializerMethodField(method_name="get_Author")
+    totalLikes   = serializers.SerializerMethodField(method_name="get_totalLikes")
 
+    def get_totalLikes(self,obj):
+        totalLike = obj.likes_and_dislikes.all().count()
+        return totalLike
 
     def get_CreatedDate(self,obj):
         tarih = datetime.strftime(obj.CreatedDate, '%d/%m/%Y %H:%M:%S')
@@ -23,14 +27,19 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=PostModel
-        fields=["Author","Title","Content",'Draft','CreatedDate','ModifiedDate','Image','url']
+        fields=["Author","Title","Content",'totalLikes','CreatedDate','ModifiedDate','Image','url']
 
 class PostDetailSerializer(serializers.ModelSerializer):
-    url      = serializers.HyperlinkedIdentityField(view_name="post:postDetail", lookup_field="Slug")
-    Author   = serializers.SerializerMethodField()
-    Yorumlar = serializers.SerializerMethodField(method_name="get_Yorumlar")
-    CreatedDate = serializers.SerializerMethodField(method_name="get_CreatedDate")
+    url          = serializers.HyperlinkedIdentityField(view_name="post:postDetail", lookup_field="Slug")
+    Author       = serializers.SerializerMethodField()
+    Yorumlar     = serializers.SerializerMethodField(method_name="get_Yorumlar")
+    CreatedDate  = serializers.SerializerMethodField(method_name="get_CreatedDate")
     ModifiedDate = serializers.SerializerMethodField(method_name="get_ModifiedDate")
+    totalLikes   = serializers.SerializerMethodField(method_name="get_totalLikes")
+
+    def get_totalLikes(self,obj):
+        totalLike = obj.likes_and_dislikes.all().count()
+        return totalLike
 
     def get_Yorumlar(self,obj):
         yorumlar   = obj.comments.all()
@@ -52,7 +61,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PostModel
-        fields=["Author","Title","Content",'Draft','CreatedDate','ModifiedDate','Image','url','Yorumlar']
+        fields=["Author","Title","Content","totalLikes",'CreatedDate','ModifiedDate','Image','url','Yorumlar']
 
 
 class PostCreateUpdateSerializer(serializers.ModelSerializer):

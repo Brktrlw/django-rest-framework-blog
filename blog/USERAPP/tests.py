@@ -22,6 +22,8 @@ class UserRegistrationTestCase(APITestCase):
         response=self.client.post(self.url,data=data)
         self.assertEqual(201,response.status_code)
 
+
+
     def test_user_invalid_registration(self):
         """
             GEÇERSİZ PASSWORD VERİSİ İLE KAYIT İŞLEMİ
