@@ -1,5 +1,3 @@
 from django.contrib import admin
-
-from .models import CommentLikesModel
-
+from COMMENTLIKES.models import CommentLikesModel
 admin.site.register(CommentLikesModel)

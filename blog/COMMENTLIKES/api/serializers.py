@@ -8,3 +8,8 @@ class CommentLikesListSerializer(serializers.ModelSerializer):
     class Meta:
         model  = CommentLikesModel
         fields = ("username",)
+
+class CreateCommentLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CommentLikesModel
+        fields = ("Comment",)
