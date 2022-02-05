@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import LikesDislikesModel
+from .models import PostLikesModel
 # Register your models here.
-admin.site.register(LikesDislikesModel)
+admin.site.register(PostLikesModel)

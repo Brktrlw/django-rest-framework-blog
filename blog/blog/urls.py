@@ -11,7 +11,8 @@ urlpatterns = [
     path("api/comment/",include("COMMENTAPP.api.urls",namespace="comment")),
     path("api/user/",include("USERAPP.api.urls",namespace="account")),
     path("api/favorites/",include("FAVORITES.api.urls",namespace="favorites")),
-    path("api/likesdislikes/",include("LIKESAPP.api.urls",namespace="likesdislikes")),
+    path("api/postlikes/",include("LIKESAPP.api.urls",namespace="postlikes")),
+    path("api/commentlikes/",include("COMMENTLIKES.api.urls",namespace="commentlikes")),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
