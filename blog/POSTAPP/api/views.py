@@ -8,7 +8,7 @@ from .paginations import PostPagination
 class PostListAPIView(ListAPIView):
     serializer_class = PostSerializer
     pagination_class = PostPagination
-
+    permission_classes = [IsAuthenticated]
     def get_queryset(self):
         queryset = PostModel.objects.filter(Draft=False)
         return queryset
@@ -43,7 +43,6 @@ class PostCreateAPIView(CreateAPIView):
     queryset           = PostModel.objects.all()
     serializer_class   = PostCreateUpdateSerializer
     permission_classes = [IsAuthenticated]
-
 
     def perform_create(self, serializer):
         serializer.save(Author=self.request.user)

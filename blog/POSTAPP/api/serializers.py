@@ -2,16 +2,21 @@ from rest_framework import serializers
 from POSTAPP.models import PostModel
 from datetime import datetime
 from COMMENTAPP.api.serializers import CommentListSerializers
-
+from LIKESAPP.models import PostLikesModel
 class PostSerializer(serializers.ModelSerializer):
     url          = serializers.HyperlinkedIdentityField(view_name="post:postDetail", lookup_field="Slug")
     CreatedDate  = serializers.SerializerMethodField(method_name="get_CreatedDate")
     ModifiedDate = serializers.SerializerMethodField(method_name="get_ModifiedDate")
     Author       = serializers.SerializerMethodField(method_name="get_Author")
     totalLikes   = serializers.SerializerMethodField(method_name="get_totalLikes")
+    isLiked      = serializers.SerializerMethodField(method_name="get_isLiked")
+
+    def get_isLiked(self,obj):
+        isLiked = PostLikesModel.objects.filter(user=self.context["request"].user,Post=obj).exists()
+        return isLiked
 
     def get_totalLikes(self,obj):
-        totalLike = obj.likes_and_dislikes.all().count()
+        totalLike = obj.likes.all().count()
         return totalLike
 
     def get_CreatedDate(self,obj):
@@ -27,7 +32,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=PostModel
-        fields=["Author","Title","Content",'totalLikes','CreatedDate','ModifiedDate','Image','url']
+        fields=["Author","Title","isLiked","Content",'totalLikes','CreatedDate','ModifiedDate','Image','url']
 
 class PostDetailSerializer(serializers.ModelSerializer):
     url          = serializers.HyperlinkedIdentityField(view_name="post:postDetail", lookup_field="Slug")
@@ -36,9 +41,14 @@ class PostDetailSerializer(serializers.ModelSerializer):
     CreatedDate  = serializers.SerializerMethodField(method_name="get_CreatedDate")
     ModifiedDate = serializers.SerializerMethodField(method_name="get_ModifiedDate")
     totalLikes   = serializers.SerializerMethodField(method_name="get_totalLikes")
+    isLiked      = serializers.SerializerMethodField(method_name="get_isLiked")
+
+    def get_isLiked(self,obj):
+        isLiked = PostLikesModel.objects.filter(user=self.context["request"].user,Post=obj).exists()
+        return isLiked
 
     def get_totalLikes(self,obj):
-        totalLike = obj.likes_and_dislikes.all().count()
+        totalLike = obj.likes.all().count()
         return totalLike
 
     def get_Yorumlar(self,obj):
@@ -61,7 +71,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PostModel
-        fields=["Author","Title","Content","totalLikes",'CreatedDate','ModifiedDate','Image','url','Yorumlar']
+        fields=["Author","Title","isLiked","Content","totalLikes",'CreatedDate','ModifiedDate','Image','url','Yorumlar']
 
 
 class PostCreateUpdateSerializer(serializers.ModelSerializer):
