@@ -14,7 +14,7 @@ class ModelNotification(models.Model):
         db_table            = "Notifications"
 
     def __str__(self):
-        return self.user.username + " " + self.NotificationText
+        return self.NotificationText
 
 
 

@@ -13,7 +13,7 @@ class LikesDetailSerializer(serializers.ModelSerializer):
 class LikeCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostLikesModel
-        fields = ("Post",)
+        fields = ("user",)
 
 
 

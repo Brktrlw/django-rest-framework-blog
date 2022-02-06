@@ -1,10 +1,11 @@
 
-
-from rest_framework.generics import ListAPIView,CreateAPIView,DestroyAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import ListAPIView,CreateAPIView
 from LIKESAPP.models import PostLikesModel
 from .serializers import LikesDetailSerializer,LikeCreateSerializer
 from NOTIFICATIONAPP.models import ModelNotification
 from POSTAPP.models import PostModel
+
 class LikesListAPIView(ListAPIView):
     serializer_class = LikesDetailSerializer
     def get_queryset(self):
@@ -13,13 +14,15 @@ class LikesListAPIView(ListAPIView):
 class CreateLikeAPIView(CreateAPIView):
     queryset = PostLikesModel.objects.all()
     serializer_class = LikeCreateSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = "Post__Slug"
 
     def perform_create(self, serializer):
         # Eğer kullanıcı beğendiyse beğeniyi geri alıyoruz,beğenmediyse gönderiyi beğeniyoruz.
         _isLike = PostLikesModel.objects.filter(user=self.request.user,Post=self.request.data.get("Post")).exists()
-        post    = PostModel.objects.get(id=self.request.data.get("Post"))
+        post    = PostModel.objects.get(Slug=self.kwargs["Slug"])
         if _isLike==False:
-            serializer.save(user=self.request.user)
+            serializer.save(user=self.request.user,Post=post)
             if post.Author!=self.request.user:
                 #Eğer kendi postunu beğenmiyorsa bildirim oluşur.
                 Notifmessage = f"{post.Slug} postunuz {self.request.user.username} tarafından beğenilmiştir."
