@@ -11,3 +11,4 @@ class PostLikesModel(models.Model):
         db_table="PostLikes"
         verbose_name="Post Beğeni"
         verbose_name_plural="Post Beğenileri"
+

@@ -15,6 +15,7 @@ urlpatterns = [
     path("api/commentlikes/",include("COMMENTLIKES.api.urls",namespace="commentlikes")),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path("api/notification/",include("NOTIFICATIONAPP.api.urls"),name="notification")
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
