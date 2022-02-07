@@ -29,6 +29,7 @@ class CommentListSerializers(ModelSerializer):
 
     def get_TotalLikes(self,obj):
         return obj.likes.all().count()
+    
     def get_Replies(self,obj):
         if obj.any_children:
             return CommentListSerializers(obj.children(),many=True).data
@@ -52,3 +53,4 @@ class CommentUpdateSerializer(ModelSerializer):
     class Meta:
         model=CommentModel
         fields=('CommentText',)
+

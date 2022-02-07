@@ -52,7 +52,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
         return totalLike
 
     def get_Yorumlar(self,obj):
-        yorumlar   = obj.comments.all()
+        yorumlar   = obj.comments.filter(Parent=None)
         serializer = CommentListSerializers(yorumlar,many=True)
         if serializer.data==[]:
             return None
@@ -78,3 +78,4 @@ class PostCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostModel
         fields = ["Title","Content",'Draft','Image']
+
