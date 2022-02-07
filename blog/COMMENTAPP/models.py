@@ -24,4 +24,4 @@ class CommentModel(models.Model):
         return CommentModel.objects.filter(Parent=self).exists()
 
     def __str__(self):
-        return str(self.CommentText)
+        return str(self.CommentText) +" "+ str(self.id)

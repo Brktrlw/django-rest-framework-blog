@@ -15,18 +15,8 @@ class PostLikesModel(models.Model):
         verbose_name_plural="Post Beğenileri"
 
 
-@receiver(pre_save,sender=PostLikesModel)
-def deneme2(sender,instance,*args,**kwargs):
-    Article_Author = instance.Post.Author # Makale sahibi
-    Like_User      = instance.user        # Beğenen Kullanıcı
-    post           = instance.Post        # Beğenilen makale
-    isLiked        = PostLikesModel.objects.filter(Post=post,user=Like_User).exists()
-    #if isLiked:
-    #    PostLikesModel.objects.filter(Post=post, user=Like_User).delete()
-    #    return True
-
 @receiver(post_save,sender=PostLikesModel)
-def deneme(sender,instance,created,*args,**kwargs):
+def afterPostLike(sender,instance,created,*args,**kwargs):
     Article_Author = instance.Post.Author # Makale sahibi
     Like_User      = instance.user        # Beğenen Kullanıcı
     post           = instance.Post
