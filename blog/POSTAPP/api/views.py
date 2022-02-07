@@ -23,7 +23,7 @@ class PostDetailAPIView(RetrieveAPIView):
 class PostDeleteAPIView(DestroyAPIView):
     queryset           = PostModel.objects.all()
     serializer_class   = PostSerializer
-    permission_classes = [IsOwner,IsAuthenticated]
+    permission_classes = [IsOwner]
     lookup_field       = 'Slug'
 
     def perform_destroy(self, instance):

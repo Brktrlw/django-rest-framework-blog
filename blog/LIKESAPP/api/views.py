@@ -18,23 +18,10 @@ class CreateLikeAPIView(CreateAPIView):
     lookup_field = "Post__Slug"
 
     def perform_create(self, serializer):
-        # Eğer kullanıcı beğendiyse beğeniyi geri alıyoruz,beğenmediyse gönderiyi beğeniyoruz.
-        _isLike = PostLikesModel.objects.filter(user=self.request.user,Post=self.request.data.get("Post")).exists()
-        post    = PostModel.objects.get(Slug=self.kwargs["Slug"])
-        if _isLike==False:
-            serializer.save(user=self.request.user,Post=post)
-            if post.Author!=self.request.user:
-                #Eğer kendi postunu beğenmiyorsa bildirim oluşur.
-                Notifmessage = f"{post.Slug} postunuz {self.request.user.username} tarafından beğenilmiştir."
-                ModelNotification.objects.create(user=post.Author,NotificationText=Notifmessage,post=post,re_user=self.request.user)
-        else:
-            try:
-                notification=ModelNotification.objects.get(user=post.Author,post=post,re_user=self.request.user)
-                notification.delete()
-            except:
-                pass
-            likeObject = PostLikesModel.objects.get(user=self.request.user,Post=self.request.data.get("Post"))
-            likeObject.delete()
+        post = PostModel.objects.get(Slug=self.kwargs["Slug"])
+        serializer.save(user=self.request.user,Post=post)
+
+
 
 
 

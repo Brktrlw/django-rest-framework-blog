@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from autoslug import AutoSlugField
 from django.utils import timezone
 from unidecode import unidecode
-from django.core.validators import MaxValueValidator, MinValueValidator
 
 class PostModel(models.Model):
     Author       = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -14,7 +13,7 @@ class PostModel(models.Model):
     CreatedDate  = models.DateTimeField(editable=False)
     ModifiedDate = models.DateTimeField(editable=False)
     Slug         = AutoSlugField(unique=True,max_length=150,editable=False,populate_from="Title")
-    Image        = models.ImageField(upload_to="PostImages",null=True,blank=True)
+    Image        = models.FileField(upload_to="PostMedia",null=True,blank=True)
 
     def save(self,*args,**kwargs):
         if not self.id:
